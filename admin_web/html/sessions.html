@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sessions</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/sessions.css" />
+</head>
+
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content sessions-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Sessions</h1>
+        </div>
+      </div>
+
+      <div class="sessions-filter-panel">
+        <div class="sessions-top-filters">
+          <div class="sessions-select-group">
+            <div class="sessions-select-wrap">
+              <select id="filterSessionService">
+                <option value="all">All Services</option>
+                <option value="Toddlers Weekly Swimming">Toddlers Weekly Swimming</option>
+                <option value="Children Weekly Swimming">Children Weekly Swimming</option>
+                <option value="Private Ladies Swimming">Private Ladies Swimming</option>
+                <option value="test">test</option>
+              </select>
+              <span class="sessions-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="sessions-select-group">
+            <div class="sessions-select-wrap">
+              <select id="filterSessionLocation">
+                <option value="all">All Locations</option>
+                <option value="Coursetia">Coursetia</option>
+                <option value="Victoria">Victoria</option>
+                <option value="-">-</option>
+              </select>
+              <span class="sessions-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="sessions-date-range">
+  
+
+            <div class="sessions-date-wrap">
+              <input type="text" id="filterSessionStartDate" placeholder="mm/dd/yyyy" />
+              <span class="sessions-date-icon">📆</span>
+            </div>
+
+            <span class="sessions-date-separator">to</span>
+
+            <div class="sessions-date-wrap">
+              <input type="text" id="filterSessionEndDate" placeholder="mm/dd/yyyy" />
+              <span class="sessions-date-icon">📆</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sessions-bottom-filters">
+          <div class="sessions-status-group">
+            <label>Status:</label>
+            <div class="sessions-chip-row" id="sessionStatusChipRow">
+              <button class="sessions-chip active" data-status="all" type="button">All</button>
+              <button class="sessions-chip" data-status="confirmed" type="button">Confirmed</button>
+              <button class="sessions-chip" data-status="cancelled" type="button">Cancelled</button>
+              <button class="sessions-chip" data-status="rescheduled" type="button">Rescheduled</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sessions-table-card">
+        <div class="table-top-actions sessions-top-action">
+          <button class="btn-outline btn-export"  type="button" id="exportSessionsBtn">Export CSV</button>
+        </div>
+
+        <div class="sessions-table-wrap">
+          <div class="sessions-table-inner">
+            <div class="sessions-table-sticky">
+              <div class="sessions-table-header">
+                <div class="col date">Date</div>
+                <div class="col time">Time</div>
+                <div class="col duration">Duration</div>
+                <div class="col service">Service</div>
+                <div class="col location">Location</div>
+                <div class="col level">Level</div>
+                <div class="col class">Class</div>
+                <div class="col status">Status</div>
+                <div class="col participants">Participants</div>
+                <div class="col attended">Attended</div>
+              </div>
+
+              <div class="sessions-table-filters">
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+                <div class="filter">
+                  <input type="text" id="filterSessionStatusText" value="All" readonly />
+                </div>
+                <div class="filter"></div>
+                <div class="filter"></div>
+              </div>
+            </div>
+
+            <div class="table-body" id="sessionsTableBody"></div>
+          </div>
+        </div>
+
+        <div id="tableFooterRoot"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("sessions");
+    renderTableFooter("Showing 1 - 20 of 16");
+  </script>
+  <body> </body>
+   </html><div class="session-attendance-overlay" id="sessionAttendanceOverlay">
+  <div class="session-attendance-modal">
+    <div class="session-attendance-header">
+      <h2>Session Attendance</h2>
+      <button class="session-attendance-close" id="closeSessionAttendance" type="button">×</button>
+    </div>
+
+    <div class="session-attendance-body">
+      <div class="session-attendance-inner"></div>
+          <div class="session-attendance-summary">
+            <div class="attendance-summary-main">
+              <div class="attendance-summary-left">
+                <div class="attendance-summary-top">
+                  <div class="attendance-summary-item">
+                    <span class="summary-icon">🗓</span>
+                    <span id="attendanceSessionDate">Monday, Apr 13, 2026</span>
+                  </div>
+
+                  <span class="summary-divider"></span>
+
+                  <div class="attendance-summary-item">
+                    <span class="summary-icon">🕘</span>
+                    <span id="attendanceSessionTime">9:00 AM</span>
+                  </div>
+                </div>
+
+                <div class="attendance-summary-sub">
+                  <span id="attendanceSessionLocation">Victoria</span>
+                  <span class="summary-tag-icon">🏷</span>
+                  <span id="attendanceSessionService">testtoday</span>
+                </div>
+
+                <div class="attendance-coach-row">
+                  <label>Coach:</label>
+                  <div class="attendance-coach-select-wrap">
+                    <select id="attendanceCoachSelect">
+                      <option>John</option>
+                      <option>Michael</option>
+                      <option>Emma</option>
+                      <option>Sarah</option>
+                    </select>
+                    <span class="attendance-coach-clear">×</span>
+                    <span class="attendance-coach-arrow">⌄</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="attendance-summary-right">
+                <div class="attendance-summary-pill" id="attendanceSummaryPill">0 / 1 Attended</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attendance-section-title">
+            <span>Participants</span>
+            <span class="attendance-list-badge">LIST</span>
+          </div>
+
+          <div class="attendance-table-card">
+            <div class="attendance-table-head">
+              <div class="col participant">Participant</div>
+              <div class="col attended">Attended</div>
+              <div class="col reason">Absence Reason</div>
+            </div>
+
+            <div class="attendance-table-body" id="attendanceTableBody"></div>
+          </div>
+        </div>
+
+        <div class="session-attendance-footer">
+          <button class="attendance-mark-all-btn" id="markAllPresentBtn" type="button">
+            <span>✓</span>
+            <span>Mark All Present</span>
+          </button>
+
+          <button class="attendance-footer-close" id="footerCloseSessionAttendance" type="button">Close</button>
+        </div>
+      </div>
+    </div>   
+  <script src="../js/sessions.js"></script>
+</body>
+</html>

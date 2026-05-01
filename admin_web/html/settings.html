@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/settings.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content settings-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Settings</h1>
+        </div>
+      </div>
+
+      <div class="settings-container">
+        <section class="settings-section">
+          <h2 class="settings-section-title">Email Settings</h2>
+          <p class="settings-section-desc">
+            Configure the sender and reply-to email addresses for booking confirmation and invoice emails.
+          </p>
+
+          <div class="settings-form-group">
+            <label for="senderName">Sender Name</label>
+            <input id="senderName" type="text" value="Fitness Champs AE" />
+            <p class="settings-field-note">
+              The display name shown in the “from” field (e.g., “Fitness Champs”). Leave empty to use the default name.
+            </p>
+          </div>
+
+          <div class="settings-form-group">
+            <label for="senderEmail">Sender Email Address</label>
+            <input id="senderEmail" type="email" value="noreply@email.fitnesschamps.ae" />
+            <p class="settings-field-note">
+              The “from” address for booking emails. Leave empty to use the default sender. Must be verified with your email provider.
+            </p>
+          </div>
+
+          <div class="settings-form-group">
+            <label for="replyToEmail">Reply-To Email Address</label>
+            <input id="replyToEmail" type="email" value="customerservice@fitnesschampsaquatics.com" />
+            <p class="settings-field-note">
+              When customers reply to booking emails, their replies will be sent to this address. Leave empty to use the sender address.
+            </p>
+          </div>
+        </section>
+
+        <div class="settings-divider"></div>
+
+        <section class="settings-section">
+          <h2 class="settings-section-title">Invoice Settings</h2>
+
+          <div class="settings-form-group">
+            <label for="companyName">Company Name</label>
+            <input id="companyName" type="text" value="Fitness Champs Excellence Sports Academy L.L.C" />
+            <p class="settings-field-note">
+              The company name displayed on booking portal invoices. Leave empty to hide.
+            </p>
+          </div>
+        </section>
+
+        <div class="settings-divider"></div>
+
+        <section class="settings-section">
+          <div class="settings-form-group settings-domain-group">
+            <label>Current Domain</label>
+
+            <div class="settings-domain-row">
+              <span class="settings-verified-badge">
+                <span class="settings-verified-icon">
+                  <svg viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="2"></circle>
+                    <path d="M6.8 10.1l2.1 2.2 4.3-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+                Verified
+              </span>
+
+              <span class="settings-domain-text">booking-portal-ruby.vercel.app</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="settings-divider"></div>
+
+        <section class="settings-section">
+          <div class="settings-form-group">
+            <label>Admin Notifications</label>
+
+            <div class="settings-toggle-row">
+              <label class="settings-switch">
+                <input id="bookingNotification" type="checkbox" checked />
+                <span class="settings-slider"></span>
+              </label>
+
+              <span class="settings-toggle-text">New Booking Email Notifications</span>
+            </div>
+
+            <p class="settings-field-note">
+              Receive an email notification when a new booking is successfully paid.
+            </p>
+          </div>
+        </section>
+
+        <div class="settings-actions">
+          <button class="btn-primary" type="button" id="saveSettingsBtn">Save Settings</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/settings.js"></script>
+</body>
+</html>

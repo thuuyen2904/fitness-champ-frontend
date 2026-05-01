@@ -1,0 +1,304 @@
+.programmes-hero {
+  padding: 86px 0 84px;
+  background: #f2f6fb;
+}
+
+.programmes-hero-inner {
+  max-width: 760px;
+  text-align: center;
+}
+
+.programmes-hero-inner h1 {
+  margin: 0 0 14px;
+  font-size: 48px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.programmes-hero-inner p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #6b7280;
+}
+
+.programmes-list-section {
+  padding: 76px 0 92px;
+  background: #ffffff;
+}
+
+.programmes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px 28px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.programme-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e8edf4;
+  border-radius: 14px;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.programme-card:hover {
+  transform: translateY(-3px);
+  border-color: #dbe4f0;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.programme-image {
+  overflow: hidden;
+}
+
+.programme-image img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.programme-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18px 18px 16px;
+}
+
+.programme-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #edf3ff;
+  color: #3b5bfd;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.programme-body h3 {
+  margin: 14px 0 10px;
+  font-size: 18px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.programme-body p {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #6b7280;
+}
+
+.programme-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.programme-actions .btn {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  padding: 0 14px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.programmes-help-section {
+  padding: 0 0 92px;
+  background: #ffffff;
+}
+
+.programmes-help-box {
+  max-width: 760px;
+  text-align: center;
+}
+
+.programmes-help-box h2 {
+  margin: 0 0 14px;
+  font-size: 38px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.programmes-help-box p {
+  max-width: 640px;
+  margin: 0 auto 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #6b7280;
+}
+
+.programmes-help-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.programmes-help-actions .btn {
+  min-width: 150px;
+  height: 42px;
+}
+
+@media (min-width: 1600px) {
+  .programmes-hero {
+    padding: 94px 0 90px;
+  }
+
+  .programmes-hero-inner h1 {
+    font-size: 54px;
+  }
+
+  .programmes-grid {
+    max-width: 1280px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .programmes-hero-inner h1 {
+    font-size: 42px;
+  }
+
+  .programmes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 900px;
+  }
+
+  .programme-image img {
+    height: 260px;
+  }
+
+  .programmes-help-box h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 991px) {
+  .programmes-hero {
+    padding: 72px 0 68px;
+  }
+
+  .programmes-hero-inner h1 {
+    font-size: 36px;
+  }
+
+  .programmes-hero-inner p {
+    font-size: 15px;
+  }
+
+  .programmes-list-section {
+    padding: 62px 0 74px;
+  }
+
+  .programmes-grid {
+    gap: 22px;
+  }
+
+  .programme-image img {
+    height: 240px;
+  }
+
+  .programmes-help-section {
+    padding-bottom: 76px;
+  }
+
+  .programmes-help-box h2 {
+    font-size: 30px;
+  }
+
+  .programmes-help-box p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 767px) {
+  .programmes-hero {
+    padding: 56px 0 54px;
+  }
+
+  .programmes-hero-inner h1 {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .programmes-hero-inner p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .programmes-list-section {
+    padding: 48px 0 58px;
+  }
+
+  .programmes-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .programme-image img {
+    height: 220px;
+  }
+
+  .programme-body {
+    padding: 16px 16px 14px;
+  }
+
+  .programme-body h3 {
+    font-size: 17px;
+  }
+
+  .programme-body p {
+    font-size: 14px;
+  }
+
+  .programme-actions {
+    flex-direction: column;
+  }
+
+  .programme-actions .btn {
+    width: 100%;
+  }
+
+  .programmes-help-section {
+    padding-bottom: 58px;
+  }
+
+  .programmes-help-box h2 {
+    font-size: 26px;
+  }
+
+  .programmes-help-box p {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .programmes-help-actions .btn {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 479px) {
+  .programmes-hero-inner h1 {
+    font-size: 26px;
+  }
+
+  .programme-image img {
+    height: 200px;
+  }
+
+  .programmes-help-box h2 {
+    font-size: 22px;
+  }
+}

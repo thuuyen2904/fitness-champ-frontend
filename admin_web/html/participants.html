@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Participants</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/participants.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content participants-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Participants</h1>
+        </div>
+      </div>
+
+      <div class="participants-filter-panel">
+        <div class="participants-top-filters">
+          <div class="participants-search-wrap">
+            <span class="participants-search-icon">⌕</span>
+            <input type="text" id="filterParticipantSearch" placeholder="Search participants" />
+          </div>
+
+          <div class="participants-search-group">
+            <label for="filterParticipantClass">Class:</label>
+            <div class="participants-class-wrap">
+              <input type="text" id="filterParticipantClass" placeholder="e.g. MON-1030" />
+            </div>
+          </div>
+        </div>
+
+        <div class="participants-bottom-filters">
+          <div class="participants-status-group">
+            <label>Status:</label>
+            <div class="participants-chip-row" id="participantsStatusChipRow">
+              <button class="participants-chip active" data-status="All" type="button">All</button>
+              <button class="participants-chip" data-status="Confirmed" type="button">Confirmed</button>
+              <button class="participants-chip" data-status="Completed" type="button">Completed</button>
+              <button class="participants-chip" data-status="Cancelled" type="button">Cancelled</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="participants-table-card">
+        <div class="participants-top-action">
+          <button class="btn-outline btn-export" type="button" id="exportParticipantsBtn">Export CSV</button>
+        </div>
+
+        <div class="participants-table-wrap">
+          <div class="participants-table-inner">
+            <div class="participants-table-sticky">
+              <div class="participants-table-header">
+                <div class="col">Name</div>
+                <div class="col">Date of Birth</div>
+                <div class="col">Real Stage</div>
+                <div class="col">Lifecycle</div>
+                <div class="col">Classes</div>
+                <div class="col">Level</div>
+                <div class="col">Status</div>
+                <div class="col">Contact</div>
+                <div class="col">Phone</div>
+              </div>
+            </div>
+
+            <div class="participants-table-body" id="participantsTableBody"></div>
+          </div>
+        </div>
+
+        <div id="tableFooterRoot"></div>
+      </div>
+
+      <div class="participant-modal-overlay" id="participantModalOverlay">
+        <div class="participant-modal">
+          <div class="participant-modal-header">
+            <h2>Participant Profile</h2>
+            <button class="participant-modal-close" id="participantModalClose" type="button" aria-label="Close">×</button>
+          </div>
+
+          <div class="participant-modal-body">
+            <div class="participant-profile-summary">
+              <div class="participant-profile-left">
+                <div class="participant-profile-badges">
+                  <span class="participant-pill participant-pill-stage" id="participantProfileStage">S03</span>
+                  <span class="participant-pill participant-pill-lifecycle" id="participantProfileLifecycle">ACTIVE</span>
+                </div>
+
+                <div class="participant-profile-meta">
+                  <div class="participant-profile-name" id="participantProfileName">Michael Pham</div>
+                  <div class="participant-profile-contact" id="participantProfileContact">michael</div>
+                </div>
+              </div>
+
+              <div class="participant-profile-actions">
+                <button class="participant-action-btn participant-action-btn-neutral" type="button">Enroll Next Term</button>
+                <button class="participant-action-btn participant-action-btn-warning" type="button">Suspend</button>
+                <button class="participant-action-btn participant-action-btn-danger" type="button">Withdraw</button>
+              </div>
+            </div>
+
+            <div class="participant-profile-tabs">
+              <button class="participant-profile-tab active" type="button" data-tab="details">Details</button>
+              <button class="participant-profile-tab" type="button" data-tab="history">Class History</button>
+              <button class="participant-profile-tab" type="button" data-tab="attendance">Attendance</button>
+            </div>
+
+            <div class="participant-profile-panels">
+              <div class="participant-profile-panel active" data-panel="details">
+                <div class="participant-profile-card">
+                  <div class="participant-section-title">PARTICIPANT INFORMATION</div>
+
+                  <div class="participant-info-grid">
+                    <div class="participant-info-item">
+                      <div class="participant-info-label">Name</div>
+                      <div class="participant-info-value" id="participantInfoName">Max Lee</div>
+                    </div>
+
+                    <div class="participant-info-item">
+                      <div class="participant-info-label">Date of Birth</div>
+                      <div class="participant-info-value" id="participantInfoDob">11/3/2026</div>
+                    </div>
+
+                    <div class="participant-info-item">
+                      <div class="participant-info-label">Real Stage</div>
+                      <div class="participant-info-input" id="participantInfoStage">S03</div>
+                    </div>
+                  </div>
+
+                  <div class="participant-section-block">
+                    <div class="participant-section-title" id="participantEnrollmentTitle">ENROLLMENTS (1)</div>
+
+                    <div class="participant-enrollment-card">
+                      <div class="participant-enrollment-top">
+                        <div class="participant-enrollment-code" id="participantEnrollmentCode">CHD_D1_T0900_L1_Loce22db707</div>
+
+                        <div class="participant-enrollment-statuses">
+                          <span class="participant-mini-pill participant-mini-pill-blue" id="participantEnrollmentLifecycle">ACTIVE</span>
+                          <span class="participant-mini-pill participant-mini-pill-light" id="participantEnrollmentStatus">CONFIRMED</span>
+                        </div>
+                      </div>
+
+                      <div class="participant-enrollment-grid">
+                        <div class="participant-enrollment-item">
+                          <span class="participant-enrollment-label">Service:</span>
+                          <span class="participant-enrollment-value" id="participantEnrollmentService">test</span>
+                        </div>
+
+                        <div class="participant-enrollment-item">
+                          <span class="participant-enrollment-label">Level:</span>
+                          <span class="participant-enrollment-value" id="participantEnrollmentLevel">Level 1</span>
+                        </div>
+
+                        <div class="participant-enrollment-item">
+                          <span class="participant-enrollment-label">Location:</span>
+                          <span class="participant-enrollment-value" id="participantEnrollmentLocation">-</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="participant-section-block">
+                    <div class="participant-section-title">CURRENT TERM</div>
+                    <div class="participant-empty-text">No term information available</div>
+                  </div>
+
+                  <div class="participant-section-block">
+                    <div class="participant-section-title">PARENT / GUARDIAN</div>
+
+                    <div class="participant-info-grid">
+                      <div class="participant-info-item">
+                        <div class="participant-info-label">Contact Name</div>
+                        <div class="participant-info-value" id="participantGuardianName">max</div>
+                      </div>
+
+                      <div class="participant-info-item">
+                        <div class="participant-info-label">Phone</div>
+                        <div class="participant-info-value" id="participantGuardianPhone">+971555342323</div>
+                      </div>
+
+                      <div class="participant-info-item">
+                        <div class="participant-info-label">Email</div>
+                        <div class="participant-info-value" id="participantGuardianEmail">max.lee@gmail.com</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="participant-profile-panel" data-panel="history">
+                <div class="participant-profile-card">
+                  <div class="participant-section-block participant-section-block-first">
+                    <div class="participant-section-title">CURRENT ENROLLMENTS</div>
+
+                    <div class="participant-history-enrollment-card">
+                      <div class="participant-history-enrollment-left">
+                        <div class="participant-history-enrollment-code" id="participantHistoryEnrollmentCode">
+                          CHD_D1_T0900_L1_Loce22db707
+                        </div>
+                        <div class="participant-history-enrollment-meta">
+                          <span id="participantHistoryEnrollmentService">test</span>
+                          <span>—</span>
+                          <span id="participantHistoryEnrollmentLevel">Level 1</span>
+                        </div>
+                      </div>
+
+                      <div class="participant-history-enrollment-right">
+                        <span class="participant-mini-pill participant-mini-pill-light" id="participantHistoryEnrollmentStatus">
+                          CONFIRMED
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="participant-section-block">
+                    <div class="participant-section-title" id="participantScheduleHistoryTitle">SCHEDULE CHANGE HISTORY (0)</div>
+
+                    <div class="participant-history-empty-card" id="participantScheduleHistoryEmpty">
+                      <div class="participant-history-empty-text">
+                        No schedule change requests found for this participant.
+                      </div>
+                    </div>
+
+                    <div class="participant-history-list" id="participantScheduleHistoryList"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="participant-profile-panel" data-panel="attendance">
+                <div class="participant-profile-card">
+                  <div class="participant-section-block participant-section-block-first">
+                    <div class="participant-section-title" id="participantAttendanceTitle">ATTENDANCE (0 ABSENCES)</div>
+
+                    <div class="participant-attendance-empty-card" id="participantAttendanceEmpty">
+                      <div class="participant-attendance-empty-icon">✓</div>
+                      <div class="participant-attendance-empty-heading">No Absences</div>
+                      <div class="participant-attendance-empty-text">
+                        This participant has no recorded absences.
+                      </div>
+                    </div>
+
+                    <div class="participant-attendance-list" id="participantAttendanceList"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="participant-modal-footer">
+            <button class="participant-footer-close" id="participantFooterClose" type="button">Close</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("participants");
+    renderTableFooter("Showing 1 - 10 of 10");
+  </script>
+  <script src="../js/participants.js"></script>
+</body>
+</html>

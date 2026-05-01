@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Detail</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/classes.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content class-detail-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu" id="backToClassesBtn">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <h1>Class Detail</h1>
+        </div>
+      </div>
+
+      <div class="class-detail-page-body">
+        <div class="class-summary-card">
+          <div class="class-summary-top">
+            <div class="class-summary-left">
+              <div class="class-summary-meta">
+                <div class="class-summary-code" id="classSummaryCode">TOD-L1-MON-1545</div>
+                <div class="class-summary-name" id="classSummaryName">Toddlers Weekly Swimming</div>
+              </div>
+
+              <div class="class-summary-tags">
+                <span class="class-summary-pill class-summary-pill-service" id="classSummaryService">Swimming</span>
+                <span class="class-summary-pill class-summary-pill-status" id="classSummaryStatus">ACTIVE</span>
+              </div>
+            </div>
+
+            <div class="class-summary-actions">
+              <button class="btn-outline class-summary-btn" type="button">Edit Class</button>
+            </div>
+          </div>
+
+          <div class="class-summary-grid">
+            <div class="class-summary-item">
+                <div class="class-summary-label-row">
+                    <span class="class-summary-icon">📶</span>
+                    <span class="class-summary-label">Level</span>
+                </div>
+                <div class="class-summary-value" id="classSummaryLevel">Level 1</div>
+            </div>
+
+            <div class="class-summary-item">
+                <div class="class-summary-label-row">
+                    <span class="class-summary-icon">👤</span>
+                    <span class="class-summary-label">Coach</span>
+                </div>
+                <div class="class-summary-value" id="classSummaryCoach">Michael</div>
+            </div>
+
+            <div class="class-summary-item">
+                <div class="class-summary-label-row">
+                    <span class="class-summary-icon">📍</span>
+                    <span class="class-summary-label">Location</span>
+                </div>
+                <div class="class-summary-value" id="classSummaryLocation">Victoria</div>
+            </div>
+
+            <div class="class-summary-item class-summary-item-schedule">
+                <div class="class-summary-label-row">
+                    <span class="class-summary-icon">🗓</span>
+                    <span class="class-summary-label">Schedule</span>
+                </div>
+                <div class="class-summary-value" id="classSummarySchedule">Monday · 1:15 PM - 2:00 PM</div>
+            </div>
+
+            <div class="class-summary-item">
+                <div class="class-summary-label-row">
+                    <span class="class-summary-icon">👥</span>
+                    <span class="class-summary-label">Capacity</span>
+                </div>
+                <div class="class-summary-value" id="classSummaryCapacity">6 / 8</div>
+            </div>
+        </div>
+
+        <div class="class-section-card">
+          <div class="class-section-head">
+            <div class="class-section-title" id="classStudentsTitle">Students (0)</div>
+            <button class="btn-outline class-summary-btn" type="button">Add Student</button>
+          </div>
+
+          <div class="class-students-table">
+            <div class="class-students-head">
+              <div class="col">Student</div>
+              <div class="col">Contact</div>
+              <div class="col">Status</div>
+              <div class="col">Attendance</div>
+            </div>
+            <div class="class-students-body" id="classStudentsBody"></div>
+          </div>
+        </div>
+
+        <div class="class-section-card class-sessions-card">
+            <div class="class-section-head">
+                <div class="class-section-title" id="classSessionsTitle">Sessions (0)</div>
+            </div>
+
+          <div class="class-sessions-table">
+            <div class="class-sessions-head">
+              <div class="col">Date</div>
+              <div class="col">Time</div>
+              <div class="col">Coach</div>
+              <div class="col">Status</div>
+              <div class="col">Attendance</div>
+            </div>
+            <div class="class-sessions-body" id="classSessionsBody"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="session-attendance-overlay" id="sessionAttendanceOverlay">
+    <div class="session-attendance-modal">
+      <div class="session-attendance-header">
+        <h2>Session Attendance</h2>
+        <button class="session-attendance-close" id="closeSessionAttendance" type="button">×</button>
+      </div>
+
+      <div class="session-attendance-body">
+        <div class="session-attendance-inner">
+          <div class="session-attendance-summary">
+            <div class="attendance-summary-main">
+              <div class="attendance-summary-left">
+                <div class="attendance-summary-top">
+                  <div class="attendance-summary-item">
+                    <span class="summary-icon">🗓</span>
+                    <span id="attendanceSessionDate">Monday, Jun 15, 2026</span>
+                  </div>
+
+                  <span class="summary-divider"></span>
+
+                  <div class="attendance-summary-item">
+                    <span class="summary-icon">🕘</span>
+                    <span id="attendanceSessionTime">3:45 PM</span>
+                  </div>
+                </div>
+
+                <div class="attendance-summary-sub">
+                  <span id="attendanceSessionLocation">Coursetia</span>
+                  <span class="summary-tag-icon">🏷</span>
+                  <span id="attendanceSessionClassName">Toddlers Weekly Swimming</span>
+                </div>
+
+                <div class="attendance-coach-row">
+                  <label>Coach:</label>
+                  <div class="attendance-coach-select-wrap">
+                    <select id="attendanceCoachSelect">
+                      <option>John</option>
+                      <option>Michael</option>
+                      <option>Emma</option>
+                      <option>Sarah</option>
+                    </select>
+                    <span class="attendance-coach-clear">×</span>
+                    <span class="attendance-coach-arrow">⌄</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="attendance-summary-right">
+                <div class="attendance-summary-pill" id="attendanceSummaryPill">0 / 1 Attended</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attendance-section-title">
+            <span>Attendance</span>
+            <span class="attendance-list-badge">LIST</span>
+          </div>
+
+          <div class="attendance-table-card">
+            <div class="attendance-table-head">
+              <div class="col participant">Participant</div>
+              <div class="col attended">Attended</div>
+              <div class="col reason">Absence Reason</div>
+            </div>
+
+            <div class="attendance-table-body" id="attendanceTableBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="session-attendance-footer">
+        <div class="attendance-footer-left">
+          <button class="attendance-mark-all-btn" id="markAllPresentBtn" type="button">
+            <span>✓</span>
+            <span>Mark All Present</span>
+          </button>
+        </div>
+
+        <div class="attendance-footer-right">
+          <button class="attendance-save-btn" id="saveAttendanceBtn" type="button">Save</button>
+          <button class="attendance-footer-close" id="footerCloseSessionAttendance" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("classes");
+  </script>
+  <script src="../js/class-detail.js"></script>
+</body>
+</html>

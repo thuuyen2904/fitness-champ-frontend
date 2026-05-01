@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookings</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/bookings.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content bookings-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Bookings</h1>
+        </div>
+      </div>
+
+      <div class="booking-filter-panel">
+        <div class="booking-top-filters">
+          <div class="booking-search-wrap">
+            <span class="search-icon">⌕</span>
+            <input type="text" id="filterBookingSearch" placeholder="Search bookings" />
+          </div>
+
+          <div class="booking-select-group">
+            <label for="filterBookingService">Service:</label>
+            <div class="booking-select-wrap">
+              <select id="filterBookingService">
+                <option value="">All Services</option>
+                <option value="Toddlers Weekly Swimming">Toddlers Weekly Swimming</option>
+                <option value="Children Weekly Swimming">Children Weekly Swimming</option>
+                <option value="Private Ladies Swimming">Private Ladies Swimming</option>
+                <option value="Private Lessons">Private Lessons</option>
+              </select>
+              <span class="booking-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="booking-select-group">
+            <label for="filterBookingLocation">Location:</label>
+            <div class="booking-select-wrap">
+              <select id="filterBookingLocation">
+                <option value="">All Locations</option>
+                <option value="Coursetia">Coursetia</option>
+                <option value="Victoria">Victoria</option>
+                <option value="Marina Pool">Marina Pool</option>
+              </select>
+              <span class="booking-select-arrow">⌄</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-bottom-filters">
+          <div class="booking-status-group">
+            <label>Status:</label>
+            <div class="booking-chip-row" id="bookingStatusChipRow">
+              <button class="booking-chip active" data-status="All" type="button">All</button>
+              <button class="booking-chip" data-status="Pending" type="button">Pending</button>
+              <button class="booking-chip" data-status="Confirmed" type="button">Confirmed</button>
+              <button class="booking-chip" data-status="Rejected" type="button">Rejected</button>
+              <button class="booking-chip" data-status="Cancelled" type="button">Cancelled</button>
+              <button class="booking-chip" data-status="Completed" type="button">Completed</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-table-card">
+        <div class="booking-top-action">
+          <button class="btn-outline btn-export" type="button" id="exportBookingBtn">Export CSV</button>
+        </div>
+
+        <div class="booking-table-wrap">
+          <div class="booking-table-inner">
+            <div class="booking-table-sticky">
+              <div class="booking-table-header">
+                <div class="col">ID</div>
+                <div class="col">Contact</div>
+                <div class="col">Participants</div>
+                <div class="col">Service</div>
+                <div class="col">Email</div>
+                <div class="col">Phone</div>
+                <div class="col">End Date</div>
+                <div class="col">Schedule</div>
+                <div class="col">Total Sessions</div>
+                <div class="col">Status</div>
+                <div class="col">Total Amount</div>
+                <div class="col">Booking Date</div>
+                <div class="col">Created At</div>
+              </div>
+            </div>
+
+            <div class="table-body" id="bookingTableBody"></div>
+          </div>
+        </div>
+
+        <div id="tableFooterRoot"></div>
+      </div>
+
+      <div class="booking-modal-overlay" id="bookingModalOverlay">
+        <div class="booking-modal">
+          <div class="booking-modal-header">
+            <h2>Booking Details</h2>
+            <button class="booking-modal-close" id="bookingModalClose" type="button" aria-label="Close">
+              ×
+            </button>
+          </div>
+
+          <div class="booking-modal-body">
+            <div class="booking-summary-card" id="bookingSummaryCard">
+              <div class="booking-summary-left">
+                <span class="booking-summary-status">CONFIRMED</span>
+
+                <div class="booking-summary-meta">
+                  <div class="booking-summary-id" id="bookingSummaryId">#ba1951a2</div>
+                  <div class="booking-summary-name" id="bookingSummaryName">michael</div>
+                </div>
+              </div>
+
+              <div class="booking-summary-right">
+                <div class="booking-summary-service" id="bookingSummaryService">test</div>
+                <div class="booking-summary-amount" id="bookingSummaryAmount">$420.00</div>
+              </div>
+            </div>
+
+            <div class="booking-tabs">
+              <button class="booking-tab" type="button" data-tab="details">Details</button>
+              <button class="booking-tab active" type="button" data-tab="sessions">Sessions</button>
+              <button class="booking-tab" type="button" data-tab="invoice">Invoice</button>
+              <button class="booking-tab" type="button" data-tab="audit">Audit Log</button>
+            </div>
+
+            <div class="booking-tab-panels">
+              <div class="booking-tab-panel" data-panel="details">
+                <div class="booking-detail-sections">
+                  <div class="booking-detail-card">
+                    <div class="booking-detail-grid booking-detail-grid-2">
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Contact</div>
+                        <div class="booking-detail-value booking-detail-link" id="bookingDetailContact">michael</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Email</div>
+                        <div class="booking-detail-value" id="bookingDetailEmail">michael.pham@chatavocado.ai</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Phone Number</div>
+                        <div class="booking-detail-value" id="bookingDetailPhone">-</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Created</div>
+                        <div class="booking-detail-value" id="bookingDetailCreated">Mar 13, 2026 11:37 AM</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="booking-detail-card">
+                    <div class="booking-detail-grid booking-detail-grid-2">
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Start Date</div>
+                        <div class="booking-detail-value" id="bookingDetailStartDate">Mar 16, 2026 5:00 AM</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">End Date</div>
+                        <div class="booking-detail-value" id="bookingDetailEndDate">Jun 15, 2026 5:00 AM</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">Location</div>
+                        <div class="booking-detail-value" id="bookingDetailLocation">-</div>
+                      </div>
+
+                      <div class="booking-detail-item">
+                        <div class="booking-detail-label">
+                          Class Schedule
+                          <button class="booking-inline-edit" type="button">Edit</button>
+                        </div>
+                        <div class="booking-detail-value booking-detail-strong" id="bookingDetailSchedule">Monday, 9:00 AM - 10:00 AM</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="booking-detail-card">
+                    <div class="booking-detail-card-title" id="bookingParticipantsTitle">Participants (1)</div>
+                    <div class="booking-participant-list" id="bookingParticipantList"></div>
+                  </div>
+
+                  <div class="booking-detail-card">
+                    <div class="booking-detail-card-title">Update Status</div>
+
+                    <div class="booking-update-status-wrap">
+                      <label class="booking-detail-label booking-status-label" for="bookingStatusSelect">Status</label>
+
+                      <div class="booking-status-select-wrap">
+                        <select id="bookingStatusSelect">
+                          <option value="Pending">Pending</option>
+                          <option value="Confirmed">Confirmed</option>
+                          <option value="Rejected">Rejected</option>
+                          <option value="Cancelled">Cancelled</option>
+                          <option value="Completed">Completed</option>
+                        </select>
+                        <span class="booking-status-select-clear">×</span>
+                        <span class="booking-status-select-arrow">⌄</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="booking-tab-panel active" data-panel="sessions">
+                <div class="booking-session-card">
+                  <div class="booking-session-card-title" id="bookingSessionsTitle">Sessions (14)</div>
+                  <div class="booking-session-list" id="bookingSessionList"></div>
+                </div>
+              </div>
+
+              <div class="booking-tab-panel" data-panel="invoice">
+                <div class="booking-invoice-sections">
+                  <div class="booking-invoice-card">
+                    <div class="booking-invoice-card-head">
+                      <div class="booking-invoice-card-title">Invoice</div>
+                    </div>
+
+                    <div class="booking-invoice-top">
+                      <div class="booking-invoice-main">
+                        <div class="booking-invoice-code" id="bookingInvoiceCode">INV_260313_003</div>
+                        <div class="booking-invoice-amount" id="bookingInvoiceAmount">$420</div>
+                        <div class="booking-invoice-paid-text">
+                          Paid: <span id="bookingInvoicePaidDateText">3/13/2026</span>
+                        </div>
+                      </div>
+
+                      <div class="booking-invoice-badge-wrap">
+                        <span class="booking-invoice-badge" id="bookingInvoiceBadge">PAID</span>
+                      </div>
+                    </div>
+
+                    <div class="booking-invoice-divider"></div>
+
+                    <div class="booking-invoice-actions">
+                      <button class="booking-invoice-btn" type="button">
+                        <span>👁</span>
+                        <span>Preview PDF</span>
+                      </button>
+
+                      <button class="booking-invoice-btn" type="button">Download</button>
+
+                      <button class="booking-invoice-link-btn" type="button">
+                        <span>✉</span>
+                        <span>Resend Invoice</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="booking-invoice-card">
+                    <div class="booking-invoice-card-head">
+                      <div class="booking-invoice-card-title">Invoice Details</div>
+                    </div>
+
+                    <div class="booking-invoice-detail-grid">
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Invoice Code</div>
+                        <div class="booking-detail-value" id="bookingInvoiceDetailCode">INV_260313_003</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Status</div>
+                        <div class="booking-detail-value" id="bookingInvoiceDetailStatus">Paid</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Subtotal</div>
+                        <div class="booking-detail-value" id="bookingInvoiceOriginalAmount">0.00</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Discount</div>
+                        <div class="booking-detail-value" id="bookingInvoiceDiscountAmount">0.00</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Final Amount</div>
+                        <div class="booking-detail-value" id="bookingInvoiceFinalAmount">0.00</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Due Date</div>
+                        <div class="booking-detail-value" id="bookingInvoiceDetailDueDate">3/13/2026</div>
+                      </div>
+
+                      <div class="booking-invoice-detail-item">
+                        <div class="booking-detail-label">Paid At</div>
+                        <div class="booking-detail-value" id="bookingInvoiceDetailPaidAt">3/13/2026</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="booking-tab-panel" data-panel="audit">
+                <div class="booking-audit-sections">
+                  <div class="booking-audit-card">
+                    <div class="booking-audit-card-title">Booking History</div>
+                    <div class="booking-audit-empty" id="bookingAuditEmpty">
+                      No booking history available.
+                    </div>
+                    <div class="booking-audit-list" id="bookingAuditList"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-modal-footer">
+            <button class="booking-btn-delete" id="openBookingDeleteBtn" type="button">Delete</button>
+
+            <div class="booking-right-actions">
+              <button class="booking-btn-cancel" id="bookingModalCancel" type="button">Cancel</button>
+              <button class="booking-btn-update" id="bookingUpdateBtn" type="button">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="booking-delete-overlay" id="bookingDeleteOverlay">
+    <div class="booking-delete-modal" role="dialog" aria-modal="true" aria-labelledby="bookingDeleteTitle">
+      <div class="booking-delete-title" id="bookingDeleteTitle">Delete Booking?</div>
+      <div class="booking-delete-text">Are you sure you want to delete this booking?</div>
+
+      <div class="booking-delete-actions">
+        <button class="booking-delete-cancel-btn" id="bookingDeleteCancelBtn" type="button">Cancel</button>
+        <button class="booking-delete-confirm-btn" id="bookingDeleteConfirmBtn" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-toast" id="bookingSuccessToast">
+    <div class="booking-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="booking-toast-text">Booking deleted successfully</div>
+    <button class="booking-toast-close" id="closeBookingSuccessToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("bookings");
+    renderTableFooter("Showing 1 - 20 of 129");
+  </script>
+  <script src="../js/bookings.js"></script>
+</body>
+</html>

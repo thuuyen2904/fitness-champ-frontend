@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Fitness Champs</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/contact.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="./index.html" class="header-logo">
+          <img src="../assets/images/logo.png" alt="Fitness Champs Logo" />
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+          <a href="./about.html">About Us</a>
+          <a href="./programmes.html">Programmes</a>
+          <a href="./faq.html">FAQ</a>
+          <a href="./contact.html" class="active">Contact</a>
+          <a href="./terms.html">Terms & Conditions</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="./programmes.html" class="btn btn-primary">Book a Class</a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="contact-hero">
+        <div class="container contact-hero-inner">
+          <h1>Contact Us</h1>
+          <p>
+            Have a question or ready to start your swimming journey? We'd love to
+            hear from you.
+          </p>
+        </div>
+      </section>
+
+      <section class="contact-section">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-form-wrap">
+              <h2>Send Us a Message</h2>
+
+              <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                  <label for="fullName">Your Name</label>
+                  <input type="text" id="fullName" placeholder="John Doe" />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" placeholder="john@example.com" />
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="text" id="phone" placeholder="+971 55 475 3886" />
+                </div>
+
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <select id="subject">
+                    <option value="">Select a subject</option>
+                    <option>Programme Enquiry</option>
+                    <option>Booking Support</option>
+                    <option>Trial Class</option>
+                    <option>General Question</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea id="message" placeholder="How can we help you?"></textarea>
+                </div>
+
+                <div class="contact-form-actions">
+                  <button type="submit" class="btn btn-primary form-btn-email">
+                    <span class="btn-icon">✉</span>
+                    <span>Email</span>
+                  </button>
+
+                  <a href="#" class="btn whatsapp-btn">
+                    <span class="btn-icon">💬</span>
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </form>
+            </div>
+
+            <div class="contact-info-wrap">
+              <h2>Get in Touch</h2>
+
+              <div class="contact-info-list">
+                <div class="contact-info-item">
+                  <div class="contact-info-icon blue">✉</div>
+                  <div class="contact-info-content">
+                    <span class="label">Email</span>
+                    <a href="mailto:customerservice@fitnesschampsaquatics.com">
+                      customerservice@fitnesschampsaquatics.com
+                    </a>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon blue">📞</div>
+                  <div class="contact-info-content">
+                    <span class="label">Phone</span>
+                    <a href="tel:+971554753886">+971 55 475 3886</a>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon green">💬</div>
+                  <div class="contact-info-content">
+                    <span class="label">WhatsApp</span>
+                    <a href="#">Chat with us</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-map-placeholder">
+                <div class="map-icon">⌘</div>
+                <p>Map Coming Soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-top">
+        <div class="footer-brand">
+          <img src="../assets/images/logo.png" alt="Fitness Champs Logo" />
+          <p>Fun, safe & holistic swimming lessons for all</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <a href="./about.html">About Us</a>
+          <a href="./programmes.html">Programmes</a>
+          <a href="./faq.html">FAQ</a>
+          <a href="./contact.html">Contact</a>
+          <a href="./terms.html">Terms & Conditions</a>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contact Us</h4>
+          <p>customerservice@fitnesschampsaquatics.com</p>
+          <p>+971 55 475 3886</p>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <p>© 2026 Fitness Champs. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="./terms.html">Terms of Service</a>
+          <a href="./terms.html">Privacy Policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/contact.js"></script>
+  </body>
+</html>

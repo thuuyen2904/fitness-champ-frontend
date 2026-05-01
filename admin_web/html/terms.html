@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/programmes.css" />
+  <link rel="stylesheet" href="../css/terms.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Terms</h1>
+        </div>
+
+        <button class="btn-primary" type="button" id="openCreateTerm">Create New Term</button>
+      </div>
+
+      <div class="table-top-actions">
+        <button class="btn-outline btn-export" type="button" id="exportTermBtn">Export CSV</button>
+      </div>
+
+      <div class="terms-table-wrap">
+        <div class="terms-table-header">
+          <div class="col id">ID</div>
+          <div class="col name">Name</div>
+          <div class="col code">Code</div>
+          <div class="col start-date">Start Date</div>
+          <div class="col end-date">End Date</div>
+          <div class="col status">Status</div>
+        </div>
+
+        <div class="terms-table-body" id="termsTableBody"></div>
+      </div>
+
+      <div id="tableFooterRoot"></div>
+    </main>
+  </div>
+
+  <div class="modal-overlay term-modal-overlay" id="createTermModal">
+    <div class="modal-container term-modal">
+      <div class="term-modal-header">
+        <h2>Create Term</h2>
+        <button class="term-modal-close" id="closeCreateTerm" type="button">×</button>
+      </div>
+
+      <div class="term-modal-body">
+        <div class="term-form-wrap">
+          <div class="term-form-group full">
+            <label>Name <span>*</span></label>
+            <input type="text" id="createTermName" placeholder="e.g., Term 1 - 2025" />
+          </div>
+
+          <div class="term-form-group full">
+            <label>Code</label>
+            <input type="text" id="createTermCode" placeholder="e.g., T1-2025" />
+          </div>
+
+          <div class="term-form-group full">
+            <label>Start Date <span>*</span></label>
+            <div class="term-date-wrap">
+              <input type="text" id="createTermStartDate" placeholder="mm/dd/yyyy" />
+              <span class="term-date-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="term-form-group full">
+            <label>End Date <span>*</span></label>
+            <div class="term-date-wrap">
+              <input type="text" id="createTermEndDate" placeholder="mm/dd/yyyy" />
+              <span class="term-date-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="term-form-group full">
+            <label>Status</label>
+            <div class="term-select-wrap">
+              <select id="createTermStatus">
+                <option>Active</option>
+                <option>Upcoming</option>
+                <option>Inactive</option>
+              </select>
+              <span class="term-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <label class="term-check-row">
+            <input type="checkbox" id="createDefaultTerm" />
+            <span>Set as default term</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="term-modal-footer">
+        <button class="term-btn-cancel" id="cancelCreateTerm" type="button">Cancel</button>
+        <button class="term-btn-create" id="submitCreateTerm" type="button">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="term-toast" id="termSuccessToast">
+    <div class="term-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="term-toast-text">Term created successfully</div>
+    <button class="term-toast-close" id="closeTermSuccessToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="modal-overlay term-modal-overlay" id="editTermModal">
+    <div class="modal-container term-modal">
+      <div class="term-modal-header">
+        <h2>Edit Term</h2>
+        <button class="term-modal-close" id="closeEditTerm" type="button">×</button>
+      </div>
+
+      <div class="term-modal-body">
+        <div class="term-form-wrap">
+          <div class="term-form-group full">
+            <label>Name <span>*</span></label>
+            <input type="text" id="editTermName" />
+          </div>
+
+          <div class="term-form-group full">
+            <label>Code</label>
+            <input type="text" id="editTermCode" />
+          </div>
+
+          <div class="term-form-group full">
+            <label>Start Date <span>*</span></label>
+            <div class="term-date-wrap">
+              <input type="text" id="editTermStartDate" />
+              <span class="term-date-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="term-form-group full">
+            <label>End Date <span>*</span></label>
+            <div class="term-date-wrap">
+              <input type="text" id="editTermEndDate" />
+              <span class="term-date-icon">◫</span>
+            </div>
+          </div>
+
+          <div class="term-form-group full">
+            <label>Status</label>
+            <div class="term-select-wrap">
+              <select id="editTermStatus">
+                <option>Active</option>
+                <option>Upcoming</option>
+                <option>Inactive</option>
+              </select>
+              <span class="term-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <label class="term-check-row">
+            <input type="checkbox" id="editDefaultTerm" />
+            <span>Set as default term</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="term-modal-footer term-edit-footer">
+        <button class="term-btn-delete" id="deleteEditTerm" type="button">Delete</button>
+        <div class="term-edit-actions">
+          <button class="term-btn-cancel" id="cancelEditTerm" type="button">Cancel</button>
+          <button class="term-btn-create" id="submitEditTerm" type="button">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="term-toast" id="termUpdateToast">
+    <div class="term-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="term-toast-text">Term updated successfully</div>
+    <button class="term-toast-close" id="closeTermUpdateToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="term-toast" id="termDeleteToast">
+    <div class="term-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="term-toast-text">Term deleted successfully</div>
+    <button class="term-toast-close" id="closeTermDeleteToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="term-delete-overlay" id="deleteTermConfirmModal">
+    <div class="term-delete-modal">
+      <div class="term-delete-title">Delete Term?</div>
+      <div class="term-delete-text">Are you sure you want to delete this term?</div>
+
+      <div class="term-delete-actions">
+        <button class="term-delete-cancel" id="cancelDeleteTerm" type="button">Cancel</button>
+        <button class="term-delete-confirm" id="confirmDeleteTerm" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("terms");
+    renderTableFooter("Showing 1 - 3 of 3");
+  </script>
+  <script src="../js/terms.js"></script>
+</body>
+</html>

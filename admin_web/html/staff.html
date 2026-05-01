@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/programmes.css" />
+  <link rel="stylesheet" href="../css/staff.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Staff</h1>
+        </div>
+
+       <button class="btn-primary staff-create-btn" id="openCreateStaff">
+          Create New Staff
+        </button>
+      </div>
+
+      <div class="table-top-actions">
+        <button class="btn-outline btn-export" type="button" id="exportStaffBtn">Export CSV</button>
+      </div>
+
+      <div class="services-table-wrap staff-table-wrap">
+        <div class="services-table-scroll">
+          <div class="services-table-inner staff-table-inner">
+            <div class="table-sticky-top">
+              <div class="table-header staff-table-header">
+                <div class="col id">ID</div>
+                <div class="col name">Name</div>
+                <div class="col email">Email</div>
+                <div class="col phone">Phone</div>
+                <div class="col role">Role</div>
+              </div>
+
+              <div class="table-filters staff-table-filters">
+                <div class="filter id"></div>
+                <div class="filter name"><input type="text" id="filterStaffName" /></div>
+                <div class="filter email"><input type="text" id="filterStaffEmail" /></div>
+                <div class="filter phone"><input type="text" id="filterStaffPhone" /></div>
+                <div class="filter role"><input type="text" id="filterStaffRole" /></div>
+              </div>
+            </div>
+
+            <div class="table-body" id="staffTableBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tableFooterRoot"></div>
+    </main>
+  </div>
+
+  <div class="staff-modal-overlay" id="createStaffModal">
+    <div class="staff-modal">
+      <div class="staff-modal-header">
+        <h2>Create Staff</h2>
+        <button class="staff-modal-close" id="closeCreateStaff" type="button">×</button>
+      </div>
+
+      <div class="staff-modal-body">
+        <div class="staff-form-wrap">
+          <div class="staff-form-group full">
+            <label>Name <span>*</span></label>
+            <input type="text" id="createStaffName" placeholder="Staff member name" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Email <span>*</span></label>
+            <input type="text" id="createStaffEmail" placeholder="email@example.com" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Phone <span>*</span></label>
+            <input type="text" id="createStaffPhone" placeholder="+1234567890" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Role <span>*</span></label>
+            <input type="text" id="createStaffRole" placeholder="e.g., Therapist, Consultant" />
+          </div>
+        </div>
+      </div>
+
+      <div class="staff-modal-footer">
+        <button class="staff-btn-cancel" id="cancelCreateStaff" type="button">Cancel</button>
+        <button class="staff-btn-create" id="submitCreateStaff" type="button">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="staff-toast" id="staffSuccessToast">
+    <div class="staff-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="staff-toast-text">Staff created successfully</div>
+    <button class="staff-toast-close" id="closeStaffSuccessToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="staff-modal-overlay" id="editStaffModal">
+    <div class="staff-modal">
+      <div class="staff-modal-header">
+        <h2>Edit Staff</h2>
+        <button class="staff-modal-close" id="closeEditStaff" type="button">×</button>
+      </div>
+
+      <div class="staff-modal-body">
+        <div class="staff-form-wrap">
+          <div class="staff-form-group full">
+            <label>Name <span>*</span></label>
+            <input type="text" id="editStaffName" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Email <span>*</span></label>
+            <input type="text" id="editStaffEmail" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Phone <span>*</span></label>
+            <input type="text" id="editStaffPhone" />
+          </div>
+
+          <div class="staff-form-group full">
+            <label>Role <span>*</span></label>
+            <input type="text" id="editStaffRole" />
+          </div>
+        </div>
+      </div>
+
+      <div class="staff-modal-footer staff-edit-footer">
+        <button class="staff-btn-delete" id="deleteEditStaff" type="button">Delete</button>
+        <button class="staff-btn-cancel" id="cancelEditStaff" type="button">Cancel</button>
+        <button class="staff-btn-create" id="submitEditStaff" type="button">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="staff-toast" id="staffUpdateToast">
+    <div class="staff-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="staff-toast-text">Staff updated successfully</div>
+    <button class="staff-toast-close" id="closeStaffUpdateToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="staff-toast" id="staffDeleteToast">
+    <div class="staff-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="staff-toast-text">Staff deleted successfully</div>
+    <button class="staff-toast-close" id="closeStaffDeleteToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="staff-delete-overlay" id="deleteStaffConfirmModal">
+    <div class="staff-delete-modal">
+      <div class="staff-delete-title">Delete Staff?</div>
+      <div class="staff-delete-text">Are you sure you want to delete this staff?</div>
+
+      <div class="staff-delete-actions">
+        <button class="staff-delete-cancel" id="cancelDeleteStaff" type="button">Cancel</button>
+        <button class="staff-delete-confirm" id="confirmDeleteStaff" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("staff");
+    renderTableFooter("Showing 1 - 6 of 6");
+  </script>
+  <script src="../js/staff.js"></script>
+</body>
+</html>

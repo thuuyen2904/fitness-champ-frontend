@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locations</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/programmes.css" />
+  <link rel="stylesheet" href="../css/locations.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Locations</h1>
+        </div>
+
+        <button class="btn-primary" id="openCreateLocation">
+          Create New Location
+        </button>
+      </div>
+
+      <div class="table-top-actions">
+        <button class="btn-outline btn-export" type="button">
+          Export CSV
+        </button>
+      </div>
+
+      <div class="services-table-wrap locations-table-wrap">
+        <div class="services-table-scroll">
+          <div class="services-table-inner locations-table-inner">
+            <div class="table-sticky-top">
+              <div class="table-header locations-table-header">
+                <div class="col id">ID</div>
+                <div class="col name">Name</div>
+                <div class="col address">Address</div>
+                <div class="col city">City</div>
+                <div class="col country">Country</div>
+                <div class="col status">Status</div>
+              </div>
+
+              <div class="table-filters locations-table-filters">
+                <div class="filter id"></div>
+                <div class="filter name"><input type="text" id="filterLocationName" /></div>
+                <div class="filter address"></div>
+                <div class="filter city"><input type="text" id="filterLocationCity" /></div>
+                <div class="filter country"><input type="text" id="filterLocationCountry" /></div>
+                <div class="filter status">
+                  <input type="text" id="filterLocationStatus" value="All" />
+                </div>
+              </div>
+            </div>
+
+            <div class="table-body" id="locationsTableBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tableFooterRoot"></div>
+    </main>
+  </div>
+
+  <div class="modal-overlay location-modal-overlay" id="createLocationModal">
+    <div class="modal-container location-modal">
+      <div class="location-modal-header">
+        <h2>Create Location</h2>
+        <button class="location-modal-close" id="closeCreateLocation" type="button">×</button>
+      </div>
+
+      <div class="location-modal-body">
+        <div class="location-form-wrap">
+          <div class="location-form-group full">
+            <label>Location Name <span>*</span></label>
+            <input type="text" placeholder="e.g., Main Center, Branch A" />
+          </div>
+
+          <div class="location-form-row two-cols">
+            <div class="location-form-group">
+              <label>Address Line 1 <span>*</span></label>
+              <input type="text" placeholder="Street address, P.O. box" />
+            </div>
+
+            <div class="location-form-group">
+              <label>Address Line 2</label>
+              <input type="text" placeholder="Apartment, suite, unit, building, floor, etc." />
+            </div>
+          </div>
+
+          <div class="location-form-row three-cols">
+            <div class="location-form-group">
+              <label>City <span>*</span></label>
+              <input type="text" placeholder="City" />
+            </div>
+
+            <div class="location-form-group">
+              <label>State</label>
+              <input type="text" placeholder="State/Province" />
+            </div>
+
+            <div class="location-form-group">
+              <label>Postal Code</label>
+              <input type="text" placeholder="Zip/Postal code" />
+            </div>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Country <span>*</span></label>
+            <div class="location-select-wrap">
+              <select>
+                <option>Singapore</option>
+                <option>United Arab Emirates</option>
+                <option>AE</option>
+                <option>Vietnam</option>
+              </select>
+              <span class="location-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Description</label>
+            <input type="text" value="test" />
+          </div>
+
+          <div class="location-form-group full">
+            <label>Google Maps Link</label>
+            <input type="text" placeholder="https://maps.google.com/..." />
+            <p class="location-helper-text">
+              <span class="location-helper-icon">ⓘ</span>
+              <span>To get the Google Maps link: Open Google Maps, search for the location, click "Share", then copy the link.</span>
+            </p>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Google Maps Link</label>
+            <input type="text" placeholder="https://maps.google.com/..." />
+            <p class="location-helper-text">
+              <span class="location-helper-icon">ⓘ</span>
+              <span>To get the Google Maps link: Open Google Maps, search for the location, click "Share", then copy the link.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="location-modal-footer">
+        <button class="location-btn-cancel" id="cancelCreateLocation" type="button">Cancel</button>
+        <button class="location-btn-create" id="submitCreateLocation" type="button">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="location-toast" id="locationSuccessToast">
+    <div class="location-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="location-toast-text">Location created successfully</div>
+    <button class="location-toast-close" id="closeLocationSuccessToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="modal-overlay location-modal-overlay" id="editLocationModal">
+    <div class="modal-container location-modal">
+      <div class="location-modal-header">
+        <h2>Edit Location</h2>
+        <button class="location-modal-close" id="closeEditLocation" type="button">×</button>
+      </div>
+
+      <div class="location-modal-body">
+        <div class="location-form-wrap">
+          <div class="location-form-group full">
+            <label>Location Name <span>*</span></label>
+            <input type="text" id="editLocationName" />
+          </div>
+
+          <div class="location-form-row two-cols">
+            <div class="location-form-group">
+              <label>Address Line 1 <span>*</span></label>
+              <input type="text" id="editAddressLine1" />
+            </div>
+
+            <div class="location-form-group">
+              <label>Address Line 2</label>
+              <input type="text" id="editAddressLine2" placeholder="Apartment, suite, unit, building, floor, etc." />
+            </div>
+          </div>
+
+          <div class="location-form-row three-cols">
+            <div class="location-form-group">
+              <label>City <span>*</span></label>
+              <input type="text" id="editCity" />
+            </div>
+
+            <div class="location-form-group">
+              <label>State</label>
+              <input type="text" id="editState" placeholder="State/Province" />
+            </div>
+
+            <div class="location-form-group">
+              <label>Postal Code</label>
+              <input type="text" id="editPostalCode" placeholder="Zip/Postal code" />
+            </div>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Country <span>*</span></label>
+            <div class="location-select-wrap">
+              <select id="editCountry">
+                <option>Singapore</option>
+                <option>United Arab Emirates</option>
+                <option>AE</option>
+                <option>Vietnam</option>
+              </select>
+              <span class="location-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Description</label>
+            <input type="text" id="editDescription" />
+          </div>
+
+          <div class="location-form-group full">
+            <label>Google Maps Link</label>
+            <input type="text" id="editGoogleMap1" placeholder="https://maps.google.com/..." />
+            <p class="location-helper-text">
+              <span class="location-helper-icon">ⓘ</span>
+              <span>To get the Google Maps link: Open Google Maps, search for the location, click "Share", then copy the link.</span>
+            </p>
+          </div>
+
+          <div class="location-form-group full">
+            <label>Google Maps Link</label>
+            <input type="text" id="editGoogleMap2" placeholder="https://maps.google.com/..." />
+            <p class="location-helper-text">
+              <span class="location-helper-icon">ⓘ</span>
+              <span>To get the Google Maps link: Open Google Maps, search for the location, click "Share", then copy the link.</span>
+            </p>
+          </div>
+
+          <label class="location-check-row">
+            <input type="checkbox" id="editLocationActive" />
+            <span>Active Location</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="edit-location-footer">
+        <button class="location-btn-delete" id="deleteEditLocation" type="button">Delete</button>
+
+        <div class="right-actions">
+          <button class="location-btn-cancel" id="cancelEditLocation" type="button">Cancel</button>
+          <button class="location-btn-create" id="submitEditLocation" type="button">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="location-toast" id="locationUpdateToast">
+    <div class="location-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="location-toast-text">Location updated successfully</div>
+    <button class="location-toast-close" id="closeLocationUpdateToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="location-toast" id="locationDeleteToast">
+    <div class="location-toast-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="location-toast-text">Location deleted successfully</div>
+    <button class="location-toast-close" id="closeLocationDeleteToast" type="button">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="location-delete-overlay" id="deleteLocationConfirmModal">
+    <div class="location-delete-modal">
+      <div class="location-delete-title">Delete Location?</div>
+      <div class="location-delete-text">Are you sure you want to delete this location?</div>
+
+      <div class="location-delete-actions">
+        <button class="location-delete-cancel" id="cancelDeleteLocation" type="button">Cancel</button>
+        <button class="location-delete-confirm" id="confirmDeleteLocation" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("locations");
+    renderTableFooter("Showing 1 - 9 of 9");
+  </script>
+  <script src="../js/locations.js"></script>
+</body>
+</html>

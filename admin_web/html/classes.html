@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes</title>
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/classes.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content classes-page">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Classes</h1>
+        </div>
+
+        <button class="btn-primary classes-create-btn" id="openCreateClass" type="button">
+          Create Class
+        </button>
+      </div>
+
+      <div class="classes-filter-panel">
+        <div class="classes-top-filters">
+          <div class="classes-search-wrap">
+            <span class="classes-search-icon">⌕</span>
+            <input
+              type="text"
+              id="filterClassSearch"
+              placeholder="Search class code or class name"
+            />
+          </div>
+
+          <div class="classes-select-group">
+            <div class="classes-select-wrap">
+              <select id="filterClassCoach">
+                <option value="">All Coaches</option>
+                <option value="John">John</option>
+                <option value="Emma">Emma</option>
+                <option value="Michael">Michael</option>
+                <option value="Sarah">Sarah</option>
+              </select>
+              <span class="classes-select-arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="classes-select-group">
+            <div class="classes-select-wrap">
+              <select id="filterClassLocation">
+                <option value="">All Locations</option>
+                <option value="Coursetia">Coursetia</option>
+                <option value="Victoria">Victoria</option>
+                <option value="Marina Pool">Marina Pool</option>
+              </select>
+              <span class="classes-select-arrow">⌄</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="classes-bottom-filters">
+          <div class="classes-status-group">
+            <label>Status:</label>
+            <div class="classes-chip-row" id="classesStatusChipRow">
+              <button class="classes-chip active" data-status="All" type="button">All</button>
+              <button class="classes-chip" data-status="Upcoming" type="button">Upcoming</button>
+              <button class="classes-chip" data-status="Active" type="button">Active</button>
+              <button class="classes-chip" data-status="Completed" type="button">Completed</button>
+              <button class="classes-chip" data-status="Cancelled" type="button">Cancelled</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-top-actions classes-table-top-actions">
+        <button class="btn-outline btn-export" type="button" id="exportClassesBtn">Export CSV</button>
+      </div>
+
+      <div class="classes-table-card">
+        <div class="classes-table-wrap">
+          <div class="classes-table-inner">
+            <div class="classes-table-sticky">
+              <div class="classes-table-header">
+                <div class="col">Class Code</div>
+                <div class="col">Class Name</div>
+                <div class="col">Schedule</div>
+                <div class="col">Coach</div>
+                <div class="col">Location</div>
+                <div class="col">Sessions</div>
+                <div class="col">Level</div>
+                <div class="col">Status</div>
+              </div>
+            </div>
+
+            <div class="classes-table-body" id="classesTableBody"></div>
+          </div>
+        </div>
+
+        <div id="tableFooterRoot"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("classes");
+    renderTableFooter("Showing 1 - 6 of 6");
+  </script>
+  <script src="../js/classes.js"></script>
+</body>
+</html>

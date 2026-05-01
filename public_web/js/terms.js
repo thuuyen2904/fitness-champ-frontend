@@ -1,0 +1,1 @@
+console.log("Terms page loaded");

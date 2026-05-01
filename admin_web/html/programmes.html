@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programmes</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/programmes.css" />
+</head>
+<body>
+  <div class="layout">
+    <div id="sidebarRoot"></div>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-title-wrap">
+          <button class="menu-toggle" type="button" aria-label="menu">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 7H19M5 12H19M5 17H19" stroke="#6B7280" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <h1>Programmes</h1>
+        </div>
+
+        <button class="btn-primary" type="button" id="openCreateProgramme">Create New Programme</button>
+      </div>
+
+      <div class="table-top-actions">
+        <button class="btn-outline btn-export" type="button" id="exportBtn">Export CSV</button>
+      </div>
+
+      <div class="programmes-table-wrap">
+        <div class="programmes-table-scroll">
+          <div class="programmes-table-inner">
+            <div class="table-sticky-top">
+              <div class="table-header">
+                <div class="col id">ID</div>
+                <div class="col name">Name</div>
+                <div class="col category">Category</div>
+                <div class="col description">Description</div>
+                <div class="col duration">Duration</div>
+                <div class="col fee">Fee</div>
+                <div class="col status">Status</div>
+              </div>
+
+              <div class="table-filters">
+                <div class="filter id"></div>
+                <div class="filter name"><input type="text" id="filterName" /></div>
+                <div class="filter category"><input type="text" id="filterCategory" /></div>
+                <div class="filter description"><input type="text" id="filterDescription" /></div>
+                <div class="filter duration"></div>
+                <div class="filter fee"></div>
+                <div class="filter status"><input type="text" id="filterStatus" value="All" /></div>
+              </div>
+            </div>
+
+            <div class="table-body" id="tableBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tableFooterRoot"></div>
+    </main>
+
+    <!-- CREATE POPUP -->
+    <div class="modal-overlay programmes-modal-overlay" id="popupLayer">
+      <section class="modal-container programme-modal programmes-modal">
+        <div class="modal-header">
+          <h2>Create Programme</h2>
+          <button class="close-btn" type="button" aria-label="close" id="closeCreateProgramme">×</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="tab-wrap">
+            <button class="tab-btn active" type="button" data-tab="details">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 4.5H14L18 8.5V19.5H8V4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                  <path d="M14 4.5V8.5H18" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>Details</span>
+            </button>
+
+            <button class="tab-btn" type="button" data-tab="schedule">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="5" y="6.5" width="14" height="12.5" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M8 4.5V8M16 4.5V8M5 10.5H19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>Schedule</span>
+            </button>
+          </div>
+
+          <div class="tab-panel active" id="detailsPanel">
+            <form class="programme-form">
+              <div class="form-group">
+                <label>Name <span class="required">*</span></label>
+                <input type="text" placeholder="Programme name" />
+              </div>
+
+              <div class="form-group">
+                <label>Category</label>
+                <input type="text" placeholder="e.g., Massage, Consultation" />
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Describe the programme..."></textarea>
+              </div>
+
+              <div class="form-row two-cols">
+                <div class="form-group">
+                  <label>Duration (minutes) <span class="required">*</span></label>
+                  <input type="text" value="60" />
+                </div>
+
+                <div class="form-group">
+                  <label>Fee Per Session <span class="required">*</span></label>
+                  <input type="text" value="0.00" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Default Location</label>
+                <div class="select-box">
+                  <span>Select default locations for schedule</span>
+                  <span class="select-icon">⌄</span>
+                </div>
+                <p class="helper-text">This location will be pre-selected when creating new schedule slots.</p>
+              </div>
+
+              <div class="form-group staff-select-group">
+                <div class="form-group staff-group">
+                  <label>Default Staff</label>
+
+                  <div class="select-box" id="staffSelectBox">
+                    <span id="staffSelected">No staff</span>
+                    <span class="select-icon">⌄</span>
+                  </div>
+
+                  <div class="select-dropdown hidden" id="staffDropdown">
+                    <div class="dropdown-item active">No staff</div>
+                    <div class="dropdown-item">Julia</div>
+                    <div class="dropdown-item">Max</div>
+                    <div class="dropdown-item">Michael</div>
+                    <div class="dropdown-item">John</div>
+                    <div class="dropdown-item">Lee</div>
+                  </div>
+
+                  <p class="helper-text">
+                    This staff member will be pre-selected when creating new schedule slots.
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Programme Image</label>
+                <div class="upload-box">
+                  <div class="upload-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 15V7" stroke="#4B5563" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M8.8 10.2L12 7L15.2 10.2" stroke="#4B5563" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M7 17.5H6.5C4.6 17.5 3 15.9 3 14C3 12.3 4.2 10.8 5.8 10.5C6 7.7 8.4 5.5 11.3 5.5C14 5.5 16.2 7.3 16.8 9.8C18.8 9.9 20.5 11.6 20.5 13.7C20.5 15.8 18.8 17.5 16.7 17.5H17" stroke="#4B5563" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="upload-title">Click to upload or drag a file here</div>
+                  <div class="upload-subtitle">Supported: image/jpeg,image/png,image/gif,image/webp • Max size: 20 MB</div>
+                </div>
+              </div>
+
+              <div class="panel-box">
+                <div class="panel-header">
+                  <div>
+                    <div class="panel-title">Programme Levels &amp; Capacity <span class="info-icon">ⓘ</span></div>
+                    <div class="panel-subtitle">Enter level name/number. Use 1-5 or 1,2,3 to cover multiple levels in one row. (Use 0 for unlimited capacity)</div>
+                  </div>
+                  <button class="add-level-btn" type="button">Add Level</button>
+                </div>
+
+                <div class="level-table">
+                  <div class="level-head">
+                    <div>LEVEL NAME/NO</div>
+                    <div>DEFAULT CAPACITY</div>
+                    <div></div>
+                  </div>
+
+                  <div class="level-row">
+                    <input type="text" value="1" />
+                    <div class="capacity-box">
+                      <span class="infinity">∞</span>
+                      <span class="unlimited-text">UNLIMITED</span>
+                    </div>
+                    <button type="button" class="trash-btn">🗑</button>
+                  </div>
+                </div>
+
+                <div class="form-group inside-panel">
+                  <label>Code Prefix</label>
+                  <input type="text" placeholder="e.g. DXB" />
+                </div>
+
+                <div class="form-row two-cols">
+                  <div class="form-group">
+                    <label>Min Age (months)</label>
+                    <input type="text" value="48" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Max Age (months)</label>
+                    <input type="text" value="144" />
+                  </div>
+                </div>
+
+                <div class="payment-box">
+                  <div class="payment-title">Payment &amp; Trial Settings</div>
+
+                  <label class="check-row">
+                    <input type="checkbox" />
+                    <span>Free Programme (Skip Checkout)</span>
+                  </label>
+
+                  <label class="check-row">
+                    <input type="checkbox" />
+                    <span>Enable Free Trial</span>
+                  </label>
+                </div>
+              </div>
+
+              <label class="check-row active-row">
+                <input type="checkbox" checked />
+                <span>Active</span>
+              </label>
+            </form>
+          </div>
+
+          <div class="tab-panel" id="schedulePanel">
+            <div class="schedule-box">
+              <div class="schedule-alert">
+                Please save the programme details first before configuring the schedule.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-outline" type="button" id="cancelCreateProgramme">Cancel</button>
+          <button class="btn-primary" type="button" id="submitCreateProgramme">Create</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- EDIT POPUP -->
+    <div class="modal-overlay programmes-modal-overlay" id="editPopupLayer">
+    <section class="modal-container programme-modal edit-modal programmes-modal">
+        <div class="modal-header">
+          <h2 id="editModalTitle">Edit Programme</h2>
+          <button class="close-btn" type="button" aria-label="close" id="closeEditProgramme">×</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="tab-wrap edit-tab-wrap">
+            <button class="tab-btn edit-tab-btn active" type="button" data-edit-tab="details">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 4.5H14L18 8.5V19.5H8V4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                  <path d="M14 4.5V8.5H18" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>Details</span>
+            </button>
+
+            <button class="tab-btn edit-tab-btn" type="button" data-edit-tab="schedule">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="5" y="6.5" width="14" height="12.5" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M8 4.5V8M16 4.5V8M5 10.5H19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>Schedule</span>
+            </button>
+
+            <button class="tab-btn edit-tab-btn" type="button" data-edit-tab="capacity">
+              <span class="tab-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 18V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M12 18V6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M18 18V13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span>Capacity</span>
+            </button>
+          </div>
+
+          <div class="tab-panel edit-tab-panel active" id="editDetailsPanel">
+            <form class="programme-form" id="editProgrammeForm">
+              <div class="form-group">
+                <label>Name <span class="required">*</span></label>
+                <input type="text" id="editProgrammeName" placeholder="Programme name" />
+              </div>
+
+              <div class="form-group">
+                <label>Category</label>
+                <input type="text" id="editProgrammeCategory" placeholder="e.g., Massage, Consultation" />
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea id="editProgrammeDescription" placeholder="Describe the programme..."></textarea>
+              </div>
+
+              <div class="form-row two-cols">
+                <div class="form-group">
+                  <label>Duration (minutes) <span class="required">*</span></label>
+                  <input type="text" id="editProgrammeDuration" />
+                </div>
+
+                <div class="form-group">
+                  <label>Fee Per Session <span class="required">*</span></label>
+                  <input type="text" id="editProgrammeFee" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Default Location</label>
+                <div class="select-box">
+                  <span id="editProgrammeDefaultLocation">Select default locations for schedule</span>
+                  <span class="select-icon">⌄</span>
+                </div>
+                <p class="helper-text">This location will be pre-selected when creating new schedule slots.</p>
+              </div>
+
+              <div class="form-group">
+                <label>Default Staff</label>
+                <div class="select-box">
+                  <span id="editProgrammeDefaultStaff">No staff</span>
+                  <span class="select-icon">⌄</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Programme Image</label>
+                <div class="upload-box">
+                  <div class="upload-title">Click to upload or drag a file here</div>
+                  <div class="upload-subtitle">Supported: image/jpeg,image/png,image/gif,image/webp • Max size: 20 MB</div>
+                </div>
+              </div>
+
+              <div class="panel-box">
+                <div class="panel-header">
+                  <div>
+                    <div class="panel-title">Programme Levels &amp; Capacity <span class="info-icon">ⓘ</span></div>
+                    <div class="panel-subtitle">Enter level name/number. Use 1-5 or 1,2,3 to cover multiple levels in one row. (Use 0 for unlimited capacity)</div>
+                  </div>
+                  <button class="add-level-btn" type="button">Add Level</button>
+                </div>
+
+                <div class="level-table">
+                  <div class="level-head">
+                    <div>LEVEL NAME/NO</div>
+                    <div>DEFAULT CAPACITY</div>
+                    <div></div>
+                  </div>
+
+                  <div class="level-row">
+                    <input type="text" id="editLevelName" value="1" />
+                    <div class="capacity-box">
+                      <span class="infinity">∞</span>
+                      <span class="unlimited-text">UNLIMITED</span>
+                    </div>
+                    <button type="button" class="trash-btn">🗑</button>
+                  </div>
+                </div>
+
+                <div class="form-group inside-panel">
+                  <label>Code Prefix</label>
+                  <input type="text" id="editCodePrefix" placeholder="e.g. DXB" />
+                </div>
+
+                <div class="form-row two-cols">
+                  <div class="form-group">
+                    <label>Min Age (months)</label>
+                    <input type="text" id="editMinAge" value="48" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Max Age (months)</label>
+                    <input type="text" id="editMaxAge" value="144" />
+                  </div>
+                </div>
+
+                <div class="payment-box">
+                  <div class="payment-title">Payment &amp; Trial Settings</div>
+
+                  <label class="check-row">
+                    <input type="checkbox" id="editFreeProgramme" />
+                    <span>Free Programme (Skip Checkout)</span>
+                  </label>
+
+                  <label class="check-row">
+                    <input type="checkbox" id="editEnableTrial" />
+                    <span>Enable Free Trial</span>
+                  </label>
+                </div>
+              </div>
+
+              <label class="check-row active-row">
+                <input type="checkbox" id="editProgrammeActive" checked />
+                <span>Active</span>
+              </label>
+            </form>
+          </div>
+
+          <div class="tab-panel edit-tab-panel" id="editSchedulePanel">
+            <div class="schedule-edit-box">
+              <div class="schedule-type-label">Schedule Type</div>
+
+              <div class="schedule-type-row">
+                <div class="schedule-type-card">
+                  <div class="schedule-type-title">Term-based Schedule</div>
+                  <div class="schedule-type-desc">Weekly time slots within a specific term period</div>
+                </div>
+
+                <div class="schedule-type-card active">
+                  <div class="schedule-type-title">Custom Dates</div>
+                  <div class="schedule-type-desc">Repeating weekly time slots within a specific week/batch</div>
+                </div>
+
+                <div class="schedule-type-card">
+                  <div class="schedule-type-title">Single Sessions / Events</div>
+                  <div class="schedule-type-desc">Specific dates and times for individual events</div>
+                </div>
+              </div>
+
+              <div class="schedule-term-box">
+                <div class="schedule-term-head">
+                  <div class="term-pill active">Term 1 - 2026</div>
+
+                  <div class="term-add-box">
+                    <span>+ Add Term</span>
+                    <span>⌄</span>
+                  </div>
+                </div>
+
+                <div class="schedule-form-grid">
+                  <div class="form-group">
+                    <label>FIRST BATCH START DATE</label>
+                    <div class="input-with-icon">
+                      <input type="text" value="03/04/2026" />
+                      <span class="input-icon">🗓</span>
+                    </div>
+                    <p class="helper-text">* This will create 2 weekly batches starting from 2026-03-04.</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label>NUMBER OF WEEKS</label>
+                    <input type="text" value="2" />
+                  </div>
+
+                  <div class="form-group">
+                    <label>CODE PREFIX</label>
+                    <input type="text" value="NNQ" />
+                    <p class="helper-text">Used for code generation (e.g. PREFIX_Level)</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Levels</label>
+                    <div class="level-chip-box">
+                      <span class="level-chip">1 ×</span>
+                    </div>
+                    <p class="helper-text">Select levels to include in batch generation</p>
+                  </div>
+                </div>
+
+                <div class="weekly-schedule-top">
+                  <span class="weekly-schedule-title">Weekly Schedule</span>
+                  <span class="weekly-count">0 time slots configured</span>
+                </div>
+
+                <div class="weekly-grid">
+                  <div class="day-card">
+                    <div class="day-head"><span>Monday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Tuesday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Wednesday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Thursday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Friday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Saturday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+
+                  <div class="day-card">
+                    <div class="day-head"><span>Sunday</span><span>＋ Add</span></div>
+                    <div class="day-empty">No time slots</div>
+                  </div>
+                </div>
+
+                <div class="schedule-tip">Click "Add" on any day to add time slots</div>
+              </div>
+
+              <div class="batch-table-box">
+                <div class="batch-table-actions">
+                  <button class="btn-primary schedule-save-btn" type="button">Save Schedule</button>
+                </div>
+
+                <div class="batch-table">
+                  <div class="batch-head">
+                    <div>Batch Name</div>
+                    <div>Date Range</div>
+                    <div>Status</div>
+                    <div>Actions</div>
+                  </div>
+
+                  <div class="batch-row">
+                    <div>Week 1</div>
+                    <div>2026-03-04 — 2026-03-10</div>
+                    <div><span class="switch-dot active"></span></div>
+                    <div class="danger-icon">🗑</div>
+                  </div>
+
+                  <div class="batch-row">
+                    <div>Week 1</div>
+                    <div>2026-03-06 — 2026-03-12</div>
+                    <div><span class="switch-dot active"></span></div>
+                    <div class="danger-icon">🗑</div>
+                  </div>
+                </div>
+
+                <div class="remove-term-text">🗑 Remove "Term 1 - 2026" from this programme</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel edit-tab-panel" id="editCapacityPanel">
+            <div class="capacity-edit-box">
+              <div class="capacity-top-box">
+                <div class="capacity-top-title">Change capacity by:</div>
+                <button class="btn-outline capacity-change-btn" type="button">Change All</button>
+              </div>
+
+              <div class="capacity-table-wrap">
+                <div class="capacity-table-top">
+                  <button class="btn-outline capacity-export-btn" type="button">Export CSV</button>
+                </div>
+
+                <div class="capacity-table">
+                  <div class="capacity-head">
+                    <div>Term</div>
+                    <div>Day</div>
+                    <div>Time</div>
+                    <div>Level</div>
+                    <div>Location</div>
+                    <div>Capacity</div>
+                    <div>Guests</div>
+                    <div>Action</div>
+                  </div>
+
+                  <div class="capacity-filters">
+                    <div><input type="text" value="All" /></div>
+                    <div><input type="text" value="All" /></div>
+                    <div></div>
+                    <div><input type="text" value="All" /></div>
+                    <div><input type="text" value="All" /></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+
+                  <div id="capacityRows">
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 1</div>
+                      <div>Test</div>
+                      <div class="cap-blue">1/∞</div>
+                      <div>1</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 1</div>
+                      <div>Coursetia</div>
+                      <div class="cap-blue">0/∞</div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 1</div>
+                      <div>Victoria</div>
+                      <div class="cap-blue">0/∞</div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 4</div>
+                      <div>Test</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 4</div>
+                      <div>Coursetia</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 4</div>
+                      <div>Victoria</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 5</div>
+                      <div>Test</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 5</div>
+                      <div>Coursetia</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 5</div>
+                      <div>Victoria</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 6</div>
+                      <div>Test</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 6</div>
+                      <div>Coursetia</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+
+                    <div class="capacity-row">
+                      <div>Term 1 - 2026</div>
+                      <div>Monday</div>
+                      <div>09:00 - 10:00</div>
+                      <div>Level 6</div>
+                      <div>Victoria</div>
+                      <div class="cap-blue cap-editable">0/50 <span class="cap-edit-icon">✎</span></div>
+                      <div>0</div>
+                      <div class="view-roster">View Roster →</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- end modal-body -->
+
+        <div class="modal-footer">
+          <button class="btn-danger-inline" type="button" id="deleteEditProgramme">Delete</button>
+          <button class="btn-outline" type="button" id="cancelEditProgramme">Cancel</button>
+          <button class="btn-primary" type="button" id="updateEditProgramme">Update</button>
+        </div>
+      </section>
+    </div>
+    <!-- VIEW ROSTER POPUP -->
+    <div class="modal-overlay programmes-modal-overlay" id="rosterPopupLayer">
+      <section class="modal-container roster-modal" role="dialog" aria-modal="true" aria-labelledby="rosterModalTitle">
+        <div class="roster-modal-header">
+          <div class="roster-modal-top">
+            <div>
+              <div class="roster-modal-title" id="rosterModalTitle">Monday, 9:00 - 10:30</div>
+              <div class="roster-meta-row">
+                <span>Level 1</span>
+                <span class="roster-meta-dot">•</span>
+                <span class="roster-enrolled-link">1/∞ Students Enrolled</span>
+              </div>
+            </div>
+
+            <button class="close-btn" type="button" aria-label="close" id="closeRosterPopup">×</button>
+          </div>
+
+          <div class="roster-tab-row">
+            <button class="roster-tab-btn active" type="button" data-roster-tab="students">Students (1)</button>
+            <button class="roster-tab-btn" type="button" data-roster-tab="sessions">Sessions (7)</button>
+          </div>
+        </div>
+
+        <div class="roster-modal-body">
+          <!-- STUDENTS -->
+          <div class="roster-tab-panel active" id="rosterStudentsPanel">
+            <div class="roster-student-row">
+              <div class="roster-student-main">
+                <div class="roster-student-top">
+                  <span class="roster-student-name">Trustee</span>
+                  <span class="roster-badge-guest">Guest</span>
+                  <button class="roster-transfer-link" type="button">Transfer</button>
+                </div>
+
+                <div class="roster-student-meta">
+                  <span>📞 +6597422147</span>
+                  <span>✉️ elson@chatavocado.ai</span>
+                </div>
+              </div>
+
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+          </div>
+
+          <!-- SESSIONS -->
+          <div class="roster-tab-panel" id="rosterSessionsPanel">
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>JAN</span>
+                <b>26</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 26 January 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>FEB</span>
+                <b>2</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 02 February 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>FEB</span>
+                <b>9</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 09 February 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>FEB</span>
+                <b>16</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 16 February 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>FEB</span>
+                <b>23</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 23 February 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>MAR</span>
+                <b>2</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 02 March 2026</div>
+                <div class="roster-session-sub">1 Student attending</div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+
+            <div class="roster-session-row">
+              <div class="roster-date-badge">
+                <span>MAR</span>
+                <b>16</b>
+              </div>
+              <div class="roster-session-content">
+                <div class="roster-session-title">Monday, 16 March 2026</div>
+                <div class="roster-session-sub">
+                  1 Student attending
+                  <span class="roster-today-badge">TODAY</span>
+                </div>
+              </div>
+              <button class="roster-session-arrow" type="button" aria-label="expand">⌄</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="roster-footer">Showing enrolled students for this session</div>
+      </section>
+    </div>
+    </div>
+  </div>
+<div class="programme-toast" id="programmeSuccessToast">
+  <div class="programme-toast-icon">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="programme-toast-text">Programme created successfully</div>
+  <button class="programme-toast-close" id="closeProgrammeSuccessToast" type="button">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+<div class="programme-toast" id="programmeUpdateToast">
+  <div class="programme-toast-icon">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="programme-toast-text">Programme updated successfully</div>
+  <button class="programme-toast-close" id="closeProgrammeUpdateToast" type="button">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
+<div class="programme-toast" id="programmeDeleteToast">
+  <div class="programme-toast-icon">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M8.5 12.3L10.7 14.5L15.5 9.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="programme-toast-text">Programme deleted successfully</div>
+  <button class="programme-toast-close" id="closeProgrammeDeleteToast" type="button">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M8 8L16 16M16 8L8 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+  <script src="../js/main.js"></script>
+  <script>
+    renderSidebar("programmes");
+    renderTableFooter("Showing 1 - 13 of 13");
+  </script>
+  <script src="../js/programmes.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+.about-hero {
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../assets/images/children.jpg");
+  background-size: cover;
+  background-position: center 34%;
+  overflow: hidden;
+}
+
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(35, 87, 210, 0.5), rgba(35, 87, 210, 0.5)),
+    linear-gradient(rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.08));
+}
+
+.about-hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 56px 32px;
+}
+
+.about-hero-inner h1 {
+  margin: 0 0 12px;
+  font-size: 54px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.about-hero-inner p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.about-story-section {
+  padding: 100px 0 90px;
+  margin-bottom: 40px;
+  background: #ffffff;
+}
+
+.about-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.about-story-content {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.about-story-content h2 {
+  margin: 0 0 20px;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #111827;
+}
+
+.about-story-content p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #6b7280;
+}
+
+.about-philosophy-section {
+  padding: 40px 0 100px;
+  background: #f8fafc;
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.philosophy-card {
+  padding: 26px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #edf1f5;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+}
+
+.philosophy-number {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  background: #edf3ff;
+  color: #3b5bfd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.philosophy-card h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #111827;
+}
+
+.philosophy-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #6b7280;
+}
+
+.cta-section {
+  background: #3366eb;
+}
+
+.cta-box {
+  padding: 80px 24px 84px;
+  text-align: center;
+}
+
+.cta-box h2 {
+  margin: 0 0 12px;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.cta-box p {
+  max-width: 720px;
+  margin: 0 auto 28px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cta-actions .btn {
+  min-width: 160px;
+  height: 46px;
+  padding: 0 20px;
+  font-size: 15px;
+  border-radius: 8px;
+}
